@@ -103,7 +103,7 @@ class Build : NukeBuild
 						.AddAuthors("Evaldas Zmitra")
 						.SetDescription("Packs bits.")
 						.SetRepositoryUrl("https://github.com/EvaldasZmitra/bitpacker")
-						.SetPackageId("bitpacker")
+						.SetPackageId("ez-bitpacker")
 						.SetNoBuild(true)
 						.SetRepositoryType("git")
 						.SetProject(pathToProject)
