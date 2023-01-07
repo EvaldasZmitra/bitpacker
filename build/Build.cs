@@ -52,7 +52,7 @@ class Build : NukeBuild
 	private AbsolutePath _testsDirectory => _nugetsDirectory / "tests";
 	private readonly string[] _projectsToCreateNugetsFrom =
 	{
-		"CodeGenerators"
+		"BitPacker"
 	};
 
 	Target Clean => _ => _
