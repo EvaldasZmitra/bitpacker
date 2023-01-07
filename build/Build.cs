@@ -99,11 +99,11 @@ class Build : NukeBuild
 				var pathToProject = $"src/{projectName}/{projectName}.csproj";
 				DotNetPack(
 					s => s
-						.SetTitle("Code Generator")
+						.SetTitle("Bitpacker")
 						.AddAuthors("Evaldas Zmitra")
-						.SetDescription("Build a C# model which then can generate C# or maybe even more languages.")
-						.SetRepositoryUrl("https://github.com/EvaldasZmitra/code-generator")
-						.SetPackageId("code-generator")
+						.SetDescription("Packs bits.")
+						.SetRepositoryUrl("https://github.com/EvaldasZmitra/bitpacker")
+						.SetPackageId("bitpacker")
 						.SetNoBuild(true)
 						.SetRepositoryType("git")
 						.SetProject(pathToProject)
