@@ -67,6 +67,6 @@ jobs:
       - name: Publish
         run: dotnet nuget push
           --skip-duplicate
-          "out/${{ env.PROJECT }}.${{ steps.version.outputs.version }}.nupkg"
+          "out/bitpacker.${{ steps.version.outputs.version }}.nupkg"
           -s github
         shell: bash
