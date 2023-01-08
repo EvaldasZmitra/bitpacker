@@ -7,79 +7,79 @@ on:
 
 jobs:
   build:
-		name: build
-		runs-on: ubuntu-latest
-		steps:
-			- name: Checkout
-				uses: actions/checkout@v3
-				with:
-					fetch-depth: 0
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-			- name: Git Version
-				id: version
-				uses: codacy/git-version@2.7.1
+      - name: Git Version
+        id: version
+        uses: codacy/git-version@2.7.1
 
-			- name: Setup .NET
-				uses: actions/setup-dotnet@v2
-				with:
-					dotnet-version: 7.0.100-preview.3.22179.4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 7.0.100-preview.3.22179.4
 
-			- name: Athenticate
-				run: dotnet nuget add source
-					--username EvaldasZmitra
-					--password ${{ secrets.PACKAGE_READER }}
-					--store-password-in-clear-text
-					--name github "https://nuget.pkg.github.com/EvaldasZmitra/index.json"
-				shell: bash
+      - name: Athenticate
+        run: dotnet nuget add source
+          --username EvaldasZmitra
+          --password ${{ secrets.PACKAGE_READER }}
+          --store-password-in-clear-text
+          --name github "https://nuget.pkg.github.com/EvaldasZmitra/index.json"
+        shell: bash
 
-			- name: Restore dependencies
-				run: dotnet restore
-				shell: bash
+      - name: Restore dependencies
+        run: dotnet restore
+        shell: bash
 
-			- name: Build
-				run: dotnet build -c ${{ inputs.config }} --no-restore
-				shell: bash
+      - name: Build
+        run: dotnet build -c ${{ inputs.config }} --no-restore
+        shell: bash
 
-			- name: Test
-				run: dotnet test
-					-c Release
-					--no-build
-					--collect:"XPlat Code Coverage"
-					-- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-				shell: bash
+      - name: Test
+        run: dotnet test
+          -c Release
+          --no-build
+          --collect:"XPlat Code Coverage"
+          -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+        shell: bash
 
-			- name: ChangeDir
-				run: cd ${{ env.PROJECT }}.Tests/TestResults && cd $(ls -d */|head -n 1)
-				shell: bash
+      - name: ChangeDir
+        run: cd ${{ env.PROJECT }}.Tests/TestResults && cd $(ls -d */|head -n 1)
+        shell: bash
 
-			- name: Codecov
-				uses: codecov/codecov-action@v2
-				with:
-					token: ${{ secrets.CODECOV_KEY }}
-					file: coverage.opencover.xml
+      - name: Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_KEY }}
+          file: coverage.opencover.xml
 
-			- name: ChangeDir
-				run: cd ../../..
-				shell: bash
+      - name: ChangeDir
+        run: cd ../../..
+        shell: bash
 
-			- name: Package
-				run: dotnet pack
-					-c Release
-					--no-build
-					-o out
-					-p:PackageVersion=${{ steps.version.outputs.version }}
-				shell: bash
+      - name: Package
+        run: dotnet pack
+          -c Release
+          --no-build
+          -o out
+          -p:PackageVersion=${{ steps.version.outputs.version }}
+        shell: bash
 
-			- name: Athenticate For Push
-				run: dotnet nuget update source github
-					--username ${{ env.PROJECT }}
-					--password ${{ secrets.GITHUB_TOKEN }}
-					--store-password-in-clear-text
-				shell: bash
+      - name: Athenticate For Push
+        run: dotnet nuget update source github
+          --username ${{ env.PROJECT }}
+          --password ${{ secrets.GITHUB_TOKEN }}
+          --store-password-in-clear-text
+        shell: bash
 
-			- name: Publish
-				run: dotnet nuget push
-					--skip-duplicate
-					"out/${{ env.PROJECT }}.${{ steps.version.outputs.version }}.nupkg"
-					-s github
-				shell: bash
+      - name: Publish
+        run: dotnet nuget push
+          --skip-duplicate
+          "out/${{ env.PROJECT }}.${{ steps.version.outputs.version }}.nupkg"
+          -s github
+        shell: bash
