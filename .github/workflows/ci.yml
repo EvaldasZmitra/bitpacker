@@ -64,9 +64,16 @@ jobs:
           --store-password-in-clear-text
         shell: bash
 
-      - name: Publish
+      - name: Publish to github packages
         run: dotnet nuget push
           --skip-duplicate
-          "out/bitpacker.${{ steps.version.outputs.version }}.nupkg"
+          "out/ez-bitpacker.${{ steps.version.outputs.version }}.nupkg"
           -s github
+        shell: bash
+
+      - name: Publish to nuget
+        run: dotnet nuget push
+          --skip-duplicate
+          "out/ez-bitpacker.${{ steps.version.outputs.version }}.nupkg"
+					-ApiKey ${{ secrets.NUGET_SERVER_KEY }}
         shell: bash
