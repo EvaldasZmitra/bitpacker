@@ -49,20 +49,6 @@ jobs:
           -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
         shell: bash
 
-      - name: ChangeDir
-        run: cd ${{ env.PROJECT }}.Tests/TestResults && cd $(ls -d */|head -n 1)
-        shell: bash
-
-      - name: Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_KEY }}
-          file: coverage.opencover.xml
-
-      - name: ChangeDir
-        run: cd ../../..
-        shell: bash
-
       - name: Package
         run: dotnet pack
           -c Release
