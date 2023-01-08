@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Serializers
+namespace BitPacker
 {
 	public sealed class BitWriter
 	{
@@ -9,27 +9,24 @@ namespace Serializers
 		private int _scratchBits;
 		private readonly List<uint> _buffer = new List<uint>();
 
-		public void Write(byte[] bytes)
+		public byte[] ToBytes()
 		{
-			for (var i = 0; i < bytes.Length; i++)
+			if (_scratchBits > 0)
 			{
-				Write(bytes[i]);
+				Flush();
 			}
+			var result = new byte[_buffer.Count * sizeof(uint)];
+			Buffer.BlockCopy(_buffer.ToArray(), 0, result, 0, result.Length);
+			return result;
 		}
 
-		public void Write(long value, long min, long max)
+		public void WriteInteger(long value, long min, long max)
 		{
 			var numBits = BitCommon.GetNumBits((ulong)(max - min));
 			Write((ulong)(value - min), numBits);
 		}
 
-		public void Write(ulong value, ulong min, ulong max)
-		{
-			var numBits = BitCommon.GetNumBits(max - min);
-			Write(value, numBits);
-		}
-
-		public void Write(double value, double min, double max, double stepSize)
+		public void WriteDecimal(double value, double min, double max, double stepSize)
 		{
 			var numBitsRequired = BitCommon.GetNumBits((ulong)(Math.Ceiling(max - min) / stepSize));
 			var unsignedValue = value - min;
@@ -37,29 +34,7 @@ namespace Serializers
 			Write(quantizedValue, numBitsRequired);
 		}
 
-		public void Write(float value, float min, float max, float stepSize)
-		{
-			var numBitsRequired = BitCommon.GetNumBits((ulong)(Math.Ceiling(max - min) / stepSize));
-			var unsignedValue = value - min;
-			var quantizedValue = (ulong)(unsignedValue / stepSize);
-			Write(quantizedValue, numBitsRequired);
-		}
-
-		public void Write(uint value, uint min, uint max)
-		{
-			var numBitsRequired = GetNumBits(min, max);
-			var unsignedValue = value - min;
-			Write(unsignedValue, numBitsRequired);
-		}
-
-		public void Write(int value, int min, int max)
-		{
-			var numBitsRequired = GetNumBits(min, max);
-			var unsignedValue = (ulong)((long)value - min);
-			Write(unsignedValue, numBitsRequired);
-		}
-
-		public void Write(ulong value, int bitsRequired)
+		private void Write(ulong value, int bitsRequired)
 		{
 			if (bitsRequired <= 32)
 			{
@@ -75,9 +50,9 @@ namespace Serializers
 			}
 		}
 
-		public void Write(uint value, int bitsRequired)
+		private void Write(uint value, int bitsRequired)
 		{
-			_scratch |= ((ulong)value) << _scratchBits;
+			_scratch |= (ulong)value << _scratchBits;
 			_scratchBits += bitsRequired;
 			if (_scratchBits >= 32)
 			{
@@ -85,40 +60,11 @@ namespace Serializers
 			}
 		}
 
-		public void Write(byte value)
-		{
-			_scratch |= ((ulong)value) << _scratchBits;
-			_scratchBits += 8;
-			if (_scratchBits >= 32)
-			{
-				Flush();
-			}
-		}
-
-		public void Write(bool value) => Write(value ? 1u : 0u, 1);
-
-		public byte[] Finalize()
-		{
-			if (_scratchBits > 0)
-			{
-				Flush();
-			}
-			var result = new byte[_buffer.Count * sizeof(uint)];
-			Buffer.BlockCopy(_buffer.ToArray(), 0, result, 0, result.Length);
-			return result;
-		}
-
 		private void Flush()
 		{
 			_buffer.Add((uint)_scratch);
 			_scratch = (_scratch & 0xffffffff00000000) >> 32;
 			_scratchBits -= 32;
-		}
-
-		private static int GetNumBits(long min, long max)
-		{
-			var range = (ulong)(max - min);
-			return BitCommon.GetNumBits(range);
 		}
 	}
 }

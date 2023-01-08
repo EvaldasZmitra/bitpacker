@@ -1,6 +1,6 @@
 using System;
 
-namespace Serializers
+namespace BitPacker
 {
 	public sealed class BitReader
 	{
@@ -18,31 +18,22 @@ namespace Serializers
 
 		public ulong ReadULong(ulong min, ulong max) => ReadULong(BitCommon.GetNumBits(min, max)) + min;
 
-		public uint ReadUInt(uint min, uint max) => ReadUint(BitCommon.GetNumBits(min, max)) + min;
-
 		public double ReadDouble(double min, double max, double stepSize) => (ReadULong(BitCommon.GetNumBits(min, max, stepSize)) * stepSize) + min;
 
-		public float ReadFloat(float min, float max, float stepSize) => (ReadULong(BitCommon.GetNumBits(min, max, stepSize)) * stepSize) + min;
-
 		public long ReadLong(long min, long max) => (long)ReadULong(BitCommon.GetNumBits(min, max)) + min;
-
-		public int ReadInt(int min, int max) => (int)((long)ReadUint(BitCommon.GetNumBits(min, max)) + min);
-
-		public byte[] ReadByteArray(int size)
-		{
-			var value = new byte[size];
-			for (var i = 0; i < size; i++)
-			{
-				value[i] = ReadByte();
-			}
-			return value;
-		}
 
 		public byte ReadByte()
 		{
 			var value = (byte)(_scratch & GetMask(8));
 			Flush(8);
 			return value;
+		}
+
+		public bool ReadBool()
+		{
+			var value = _scratch & GetMask(1);
+			Flush(1);
+			return value == 1;
 		}
 
 		public ulong ReadULong(int bits)
@@ -61,7 +52,7 @@ namespace Serializers
 			}
 		}
 
-		public uint ReadUint(int bits)
+		private uint ReadUint(int bits)
 		{
 			var value = (uint)(_scratch & GetMask(bits));
 			Flush(bits);
@@ -80,9 +71,12 @@ namespace Serializers
 
 		private void Flush()
 		{
-			_scratch |= (ulong)_buffer[_bufferIndex] << _scratch_bits;
-			_bufferIndex++;
-			_scratch_bits += 32;
+			if (_bufferIndex < _buffer.Length)
+			{
+				_scratch |= (ulong)_buffer[_bufferIndex] << _scratch_bits;
+				_bufferIndex++;
+				_scratch_bits += 32;
+			}
 		}
 
 		private static ulong GetMask(int numBits) => (uint)(((ulong)1 << numBits) - 1);

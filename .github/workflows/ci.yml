@@ -50,6 +50,12 @@ jobs:
           -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
         shell: bash
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./tests/**/TestResults/**/coverage.opencover.xml
+
       - name: Package
         run: dotnet pack
           -c Release

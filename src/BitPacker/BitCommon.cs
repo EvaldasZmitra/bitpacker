@@ -1,15 +1,10 @@
-namespace Serializers
+namespace BitPacker
 {
 	public static class BitCommon
 	{
-		public static int GetNumBits(float min, float max, float increment) => GetNumBits(
-			(ulong)((max - min + 1) / increment)
-		);
 		public static int GetNumBits(double min, double max, double increment) => GetNumBits(
 			(ulong)((max - min + 1) / increment)
 		);
-		public static int GetNumBits(int min, int max) => GetNumBits((ulong)(max - min));
-		public static int GetNumBits(uint min, uint max) => GetNumBits(max - min);
 		public static int GetNumBits(long min, long max) => GetNumBits((ulong)(max - min));
 		public static int GetNumBits(ulong min, ulong max) => GetNumBits(max - min);
 		public static int GetNumBits(ulong range)
