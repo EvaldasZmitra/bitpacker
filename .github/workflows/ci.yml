@@ -59,7 +59,7 @@ jobs:
 
       - name: Athenticate For Push
         run: dotnet nuget update source github
-          --username ${{ env.PROJECT }}
+          --username EvaldasZmitra
           --password ${{ secrets.GITHUB_TOKEN }}
           --store-password-in-clear-text
         shell: bash
