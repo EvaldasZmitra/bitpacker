@@ -13,6 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
+          ref: ${{ github.head_ref }}
           fetch-depth: 0
 
       - name: Git Version
@@ -76,4 +77,5 @@ jobs:
           --skip-duplicate
           "out/ez-bitpacker.${{ steps.version.outputs.version }}.nupkg"
           -k ${{ secrets.NUGET_SERVER_KEY }}
+          -s https://api.nuget.org/v3/index.json
         shell: bash
