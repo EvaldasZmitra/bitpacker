@@ -75,5 +75,5 @@ jobs:
         run: dotnet nuget push
           --skip-duplicate
           "out/ez-bitpacker.${{ steps.version.outputs.version }}.nupkg"
-          -ApiKey ${{ secrets.NUGET_SERVER_KEY }}
+          -k ${{ secrets.NUGET_SERVER_KEY }}
         shell: bash
