@@ -16,27 +16,11 @@ namespace BitPacker
 			Flush();
 		}
 
-		public ulong ReadULong(ulong min, ulong max) => ReadULong(BitCommon.GetNumBits(min, max)) + min;
+		public double ReadDecimal(double min, double max, double stepSize) => (ReadULong(BitCommon.GetNumBits(min, max, stepSize)) * stepSize) + min;
 
-		public double ReadDouble(double min, double max, double stepSize) => (ReadULong(BitCommon.GetNumBits(min, max, stepSize)) * stepSize) + min;
+		public long ReadInteger(long min, long max) => (long)ReadULong(BitCommon.GetNumBits(min, max)) + min;
 
-		public long ReadLong(long min, long max) => (long)ReadULong(BitCommon.GetNumBits(min, max)) + min;
-
-		public byte ReadByte()
-		{
-			var value = (byte)(_scratch & GetMask(8));
-			Flush(8);
-			return value;
-		}
-
-		public bool ReadBool()
-		{
-			var value = _scratch & GetMask(1);
-			Flush(1);
-			return value == 1;
-		}
-
-		public ulong ReadULong(int bits)
+		private ulong ReadULong(int bits)
 		{
 			if (bits <= 32)
 			{

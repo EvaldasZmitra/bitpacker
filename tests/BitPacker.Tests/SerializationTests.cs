@@ -34,7 +34,7 @@ public class UnitTest1
 		var arr = writer.ToBytes();
 		var reader = new BitReader(arr);
 
-		var actual = reader.ReadLong(min, max);
+		var actual = reader.ReadInteger(min, max);
 
 		actual.Should().Be(value);
 	}
@@ -53,7 +53,7 @@ public class UnitTest1
 		var arr = writer.ToBytes();
 		var reader = new BitReader(arr);
 
-		var actual = reader.ReadDouble(min, max, stepSize);
+		var actual = reader.ReadDecimal(min, max, stepSize);
 
 		actual.Should().Be(value);
 	}
