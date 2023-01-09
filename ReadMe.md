@@ -2,6 +2,7 @@
 
 ![Nuget](https://img.shields.io/nuget/v/ez-bitpacker)
 ![Build](https://github.com/EvaldasZmitra/bitpacker/actions/workflows/ci.yml/badge.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/245dc8b2b15e453787b9d878a7e4171b)](https://app.codacy.com/gh/EvaldasZmitra/bitpacker?utm_source=github.com&utm_medium=referral&utm_content=EvaldasZmitra/bitpacker&utm_campaign=Badge_Grade_Settings)
 [![codecov](https://codecov.io/gh/EvaldasZmitra/bitpacker/branch/master/graph/badge.svg?token=8JK9DEC8Q0)](https://codecov.io/gh/EvaldasZmitra/bitpacker)
 
 This package is still in development. I made it for personal use, but thought it
