@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
 		<RepositoryUrl>https://github.com/EvaldasZmitra/bitpacker</RepositoryUrl>
     <PackageId>ez-bitpacker</PackageId>
+    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
 </Project>
