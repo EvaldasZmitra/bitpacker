@@ -3,6 +3,7 @@
 ![Nuget](https://img.shields.io/nuget/v/ez-bitpacker)
 ![Build](https://github.com/EvaldasZmitra/bitpacker/actions/workflows/ci.yml/badge.svg)
 [![codecov](https://codecov.io/gh/EvaldasZmitra/bitpacker/branch/master/graph/badge.svg?token=8JK9DEC8Q0)](https://codecov.io/gh/EvaldasZmitra/bitpacker)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/fae76e9f072d4f50a1d1c46ca3a7c85c)](https://www.codacy.com/gh/EvaldasZmitra/bitpacker/dashboard?utm_source=github.com&utm_medium=referral&utm_content=EvaldasZmitra/bitpacker&utm_campaign=Badge_Grade)
 
 This package is still in development. I made it for personal use, but thought it
 would be nice to share, if anyone needs a bitpacker in C#. The performance
