@@ -11,11 +11,12 @@ namespace BitPacker
 
 		public byte[] ToBytes()
 		{
+			var finalSize = _buffer.Count * sizeof(uint) + ((_scratchBits + 8 - 1) / 8);
 			if (_scratchBits > 0)
 			{
 				Flush();
 			}
-			var result = new byte[_buffer.Count * sizeof(uint)];
+			var result = new byte[finalSize];
 			Buffer.BlockCopy(_buffer.ToArray(), 0, result, 0, result.Length);
 			return result;
 		}
