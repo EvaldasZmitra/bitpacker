@@ -1,7 +1,7 @@
 # BitPacker
 
-![Nuget](https://img.shields.io/nuget/v/ez-bitpacker)
-![Build](https://github.com/EvaldasZmitra/bitpacker/actions/workflows/ci.yml/badge.svg)
+[![Nuget](https://img.shields.io/nuget/v/ez-bitpacker)](https://www.nuget.org/packages/ez-bitpacker/)
+[![Build](https://github.com/EvaldasZmitra/bitpacker/actions/workflows/ci.yml/badge.svg)](https://github.com/EvaldasZmitra/bitpacker/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/EvaldasZmitra/bitpacker/branch/master/graph/badge.svg?token=8JK9DEC8Q0)](https://codecov.io/gh/EvaldasZmitra/bitpacker)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/fae76e9f072d4f50a1d1c46ca3a7c85c)](https://www.codacy.com/gh/EvaldasZmitra/bitpacker/dashboard?utm_source=github.com&utm_medium=referral&utm_content=EvaldasZmitra/bitpacker&utm_campaign=Badge_Grade)
 
