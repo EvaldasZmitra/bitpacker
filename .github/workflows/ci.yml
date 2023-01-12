@@ -19,9 +19,16 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
-      - name: Git Version
-        id: version
-        uses: codacy/git-version@2.7.1
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        with:
+          versionSpec: '6.x'
+          includePrerelease: true
+
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0.9.7
+        with:
+          useConfigFile: true
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v2
@@ -64,7 +71,7 @@ jobs:
           -c Release
           --no-build
           -o out
-          -p:PackageVersion=${{ steps.version.outputs.version }}
+          -p:PackageVersion=${{ steps.gitversion.outputs.semVer }}
         shell: bash
 
       - name: Athenticate For Push
@@ -77,14 +84,14 @@ jobs:
       - name: Publish to github packages
         run: dotnet nuget push
           --skip-duplicate
-          "out/ez-bitpacker.${{ steps.version.outputs.version }}.nupkg"
+          "out/ez-bitpacker.${{ steps.gitversion.outputs.semVer }}.nupkg"
           -s github
         shell: bash
 
       - name: Publish to nuget
         run: dotnet nuget push
           --skip-duplicate
-          "out/ez-bitpacker.${{ steps.version.outputs.version }}.nupkg"
+          "out/ez-bitpacker.${{ steps.gitversion.outputs.semVer }}.nupkg"
           -k ${{ secrets.NUGET_SERVER_KEY }}
           -s https://api.nuget.org/v3/index.json
         shell: bash
