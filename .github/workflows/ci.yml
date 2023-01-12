@@ -66,6 +66,7 @@ jobs:
           directory: tests/BitPacker.Tests
 
       - name: Package
+        if: github.ref == 'refs/heads/master'
         run: dotnet pack
           -c Release
           --no-build
@@ -74,6 +75,7 @@ jobs:
         shell: bash
 
       - name: Athenticate For Push
+        if: github.ref == 'refs/heads/master'
         run: dotnet nuget update source github
           --username EvaldasZmitra
           --password ${{ secrets.GITHUB_TOKEN }}
@@ -81,6 +83,7 @@ jobs:
         shell: bash
 
       - name: Publish to github packages
+        if: github.ref == 'refs/heads/master'
         run: dotnet nuget push
           --skip-duplicate
           "out/ez-bitpacker.${{ steps.gitversion.outputs.semVer }}.nupkg"
@@ -88,6 +91,7 @@ jobs:
         shell: bash
 
       - name: Publish to nuget
+        if: github.ref == 'refs/heads/master'
         run: dotnet nuget push
           --skip-duplicate
           "out/ez-bitpacker.${{ steps.gitversion.outputs.semVer }}.nupkg"

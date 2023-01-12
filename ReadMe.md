@@ -28,7 +28,7 @@ writer.WriteInteger(5, 0, 10);
     covered by double.
 
     Since range is 20, should use 5 bits. But will always round up to closest
-    4bytes.
+    byte, so it will be 1byte.
 */
 writer.WriteDecimal(0.5, -1, 1, 0.1)
 var bytes = writer.ToBytes();
