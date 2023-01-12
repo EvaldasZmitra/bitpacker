@@ -43,9 +43,9 @@ namespace BitPacker
 			}
 			else
 			{
-				var int1 = (uint)(value & 0x00000000ffffffff);
-				Write(int1, bitsRequired);
-				var int2 = (uint)(value & 0xffffffff00000000);
+				var int1 = value & 0x00000000ffffffff;
+				Write(int1, 32);
+				var int2 = (value & 0xffffffff00000000) >> 32;
 				Write(int2, bitsRequired - 32);
 			}
 		}

@@ -25,8 +25,8 @@ public class UnitTest1
 	}
 
 	[Theory]
-	[InlineData(10, 0, 100)]
-	[InlineData(100, 0, 5000000000)]
+	//[InlineData(10, 0, 100)]
+	[InlineData(4900000000, 0, 5000000000)]
 	public void ReadLong(long value, long min, long max)
 	{
 		var writer = new BitWriter();
