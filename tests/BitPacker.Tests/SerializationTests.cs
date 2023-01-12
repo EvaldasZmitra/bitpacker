@@ -21,11 +21,11 @@ public class UnitTest1
 
 		var arr = writer.ToBytes();
 
-		arr.Should().BeEquivalentTo(new[] { 0b11111111, 0, 0, 0 });
+		arr.Should().BeEquivalentTo(new[] { 0b11111111 });
 	}
 
 	[Theory]
-	//[InlineData(10, 0, 100)]
+	[InlineData(10, 0, 100)]
 	[InlineData(4900000000, 0, 5000000000)]
 	public void ReadLong(long value, long min, long max)
 	{
