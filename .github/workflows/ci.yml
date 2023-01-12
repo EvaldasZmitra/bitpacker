@@ -66,6 +66,7 @@ jobs:
           directory: tests/BitPacker.Tests
 
       - name: Package
+        if: github.ref == 'refs/heads/master'
         run: dotnet pack
           -c Release
           --no-build
