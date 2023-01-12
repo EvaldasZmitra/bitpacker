@@ -66,12 +66,11 @@ jobs:
           directory: tests/BitPacker.Tests
 
       - name: Package
-        if: github.ref == 'refs/heads/master'
         run: dotnet pack
           -c Release
           --no-build
           -o out
-          -p:PackageVersion=${{ steps.gitversion.outputs.semVer }}
+          -p:PackageVersion=${{ GitVersion_SemVer }}
         shell: bash
 
       - name: Athenticate For Push
@@ -86,7 +85,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: dotnet nuget push
           --skip-duplicate
-          "out/ez-bitpacker.${{ steps.gitversion.outputs.semVer }}.nupkg"
+          "out/ez-bitpacker.${{ GitVersion_SemVer }}.nupkg"
           -s github
         shell: bash
 
@@ -94,7 +93,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: dotnet nuget push
           --skip-duplicate
-          "out/ez-bitpacker.${{ steps.gitversion.outputs.semVer }}.nupkg"
+          "out/ez-bitpacker.${{ GitVersion_SemVer }}.nupkg"
           -k ${{ secrets.NUGET_SERVER_KEY }}
           -s https://api.nuget.org/v3/index.json
         shell: bash
