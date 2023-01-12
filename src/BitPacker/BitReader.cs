@@ -29,9 +29,9 @@ namespace BitPacker
 			else
 			{
 				var num1 = (ulong)ReadUint(32);
-				var num2 = (ulong)ReadUint(bits - 32) << 32;
+				var num2 = ((ulong)ReadUint(bits - 32)) << 32;
 				var value = num1 & 0x00000000ffffffff;
-				value &= num2 & 0xffffffff00000000;
+				value |= num2 & 0xffffffff00000000;
 				return value;
 			}
 		}
