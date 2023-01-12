@@ -18,7 +18,7 @@ namespace BitPacker
 
 		public double ReadDecimal(double min, double max, double stepSize) => (ReadULong(BitCommon.GetNumBits(min, max, stepSize)) * stepSize) + min;
 
-		public long ReadInteger(long min, long max) => (long)ReadULong(BitCommon.GetNumBits(min, max)) + min;
+		public long ReadInteger(long min, long max) => (long)ReadULong(BitCommon.GetNumBits((ulong)(max - min))) + min;
 
 		private ulong ReadULong(int bits)
 		{
